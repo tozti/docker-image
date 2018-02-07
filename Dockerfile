@@ -1,18 +1,15 @@
-FROM ubuntu:latest
+FROM mhart/alpine-node:9.5
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y git
-RUN apt-get install -y python3
-RUN apt-get install -y wget 
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python3 get-pip.py
-RUN git clone https://github.com/tozti/core.git
+RUN apk add --no-cache \
+    git \
+    python3 \
+    wget \
+    py-pip \
+    mongodb \
+    libsodium && git clone https://github.com/tozti/tozti && apk del git
+WORKDIR tozti/
+RUN npm install && npm run build && rm -r node_modules && pip3 install -r requirements.txt
+VOLUME /data/db
+EXPOSE 8080 27017 
 
-WORKDIR core/
-
-
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
-
-ENTRYPOINT git pull && pip3 install . && run_tozti
+ENTRYPOINT mongod & python3 -m tozti dev
