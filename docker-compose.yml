@@ -1,0 +1,12 @@
+tozti:
+    image: tozti:latest
+    command: python -m tozti dev
+    ports:
+        - "4000:8080"
+    links:
+        - mongodb
+    volumes:
+        - ./extensions/:/tozti/extensions/
+
+mongodb:
+    image: mongo:latest

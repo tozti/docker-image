@@ -1,8 +1,6 @@
 # docker-image
 
-The docker image for running the tozti project. For now it also installs mongodb 
-(for an image size of 213 mo), but in the near future we can imagine removing it
-in order to use a docker image of a mongodb, thus reducing the size to 70mo.
+The docker image for running the tozti project.
 
 ## What is that?
 
@@ -11,24 +9,34 @@ The image is in fact a sort of little linus server with only what is necessary t
 
 ## Requirements to build & run the image
 
-Docker, instruction to install (on ubuntu, but there are also versions for windows or macOS) on the website: https://store.docker.com/editions/community/docker-ce-server-ubuntu.
-Make sure you download the community edition.
+You will need `docker` and `docker-compose`.
 
 ## Build the image
 
 Just go to the repos' directory and run 
 
-> sudo docker build -t <the name you want to give>
+```
+docker build -t tozti --no-cache
+```
+
+The `no-cache` option is here to force the image to be build from scratch.
 
 ## Run the image
 
-Once you have the docker image on your device (by downloading it or by building it), it has a name, let's say *tozti_image*
-Then run:
+To run tozti we are using `docker-compose`. To launch tozti, execute:
 
-> sudo docker run -p 4000:8080 tozti_image
+```
+docker-compose up
+```
 
-This line launch the tozti server, and maps the port 8080 of the server to the port 4000 of your computer. The server can be accessed at the adress http://localhost:4000
+To stop a running instance, type:
+
+```
+docker-compose down
+```
+
+This line launch the tozti server, and maps the port 8080 of the server to the port 8080 of your computer. The server can be accessed at the adress http://localhost:8080
 
 ## Installing extensions
 
-To install extensions, you can use Docker's volumes
+If you want to install any extensions, just copy them in the folder `extensions/`. Don't forget to execute `npm install` or `npm run build` if the extensions needs it.

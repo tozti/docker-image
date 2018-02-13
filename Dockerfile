@@ -19,16 +19,14 @@ COPY --from=0 /tozti .
 # it's not needed anymore
 RUN apk add --no-cache python3 py-pip libsodium \
     && pip3 install -r requirements.txt \
-    && apk del py-pip
-# install mongodb
-RUN apk add --no-cache mongodb
+    && apk del py-pip 
 # we could also remove ncurses-terminfo-base, ncurses-terminfo, ncurses-libs 
 # or sqlite-libs to reduce the size by 10mo. But these packages (although    
 # useless for us), are dependencies of python3. So removing them is quite
 # annoying and quite hacky.
 
 
-EXPOSE 8080 27017 
+EXPOSE 8080
 
 # start mongodb in the background
-ENTRYPOINT mongod & python3 -m tozti dev
+ENTRYPOINT python3 -m tozti dev
