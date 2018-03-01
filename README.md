@@ -16,7 +16,7 @@ You will need `docker` and `docker-compose`.
 Just go to the repos' directory and run 
 
 ```
-docker build -t tozti --no-cache
+docker build -t tozti --no-cache .
 ```
 
 The `no-cache` option is here to force the image to be build from scratch.
